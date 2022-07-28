@@ -1,2 +1,3 @@
 # snake-gym
-Implement snake with gym API
+
+This package is my own implementation on Snake game with Gym integration.
