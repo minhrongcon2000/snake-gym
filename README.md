@@ -8,7 +8,7 @@ This package is my own implementation on Snake game with Gym integration.
 import gym
 import snake_gym_grid.snake_gym_grid
 
-env = gym.make("snake-gym-10x20-v0", new_step_api=True, render_mode="human")
+env = gym.make("snake-gym-10x20-v0")
 env.reset()
 
 done = False # whether the snake dies
@@ -26,10 +26,7 @@ observation = env.reset()
 
 while not done:
     env.render()
-    # I just use truncate because it's recommended by Gym
-    # However, you may not need it
-    # It signifies whether the game is running for more than 100000 steps
-    observation, reward, done, truncate, info = env.step(action)
+    observation, reward, done, info = env.step(action)
 env.close()
 ```
 
