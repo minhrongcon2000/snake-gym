@@ -16,7 +16,7 @@ class SnakeComponent:
 
 
 class SnakeController:
-    def __init__(self, n_rows, n_cols, random_state=0):
+    def __init__(self, n_rows, n_cols, random_state=None):
         np.random.seed(random_state)
         self.board_state = np.zeros((n_rows, n_cols), dtype=int)
         
