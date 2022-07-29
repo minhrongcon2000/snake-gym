@@ -6,7 +6,7 @@ This package is my own implementation on Snake game with Gym integration.
 
 ```python
 import gym
-import snake_gym_grid
+import snake_gym_grid.snake_gym_grid
 
 env = gym.make("snake-gym-10x20-v0", new_step_api=True, render_mode="human")
 env.reset()
