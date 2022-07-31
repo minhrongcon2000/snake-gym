@@ -81,5 +81,5 @@ class SnakeGymGrid(gym.Env):
             pygame.quit()
             
 class SnakeGymGrid10x20(SnakeGymGrid):
-    def __init__(self, render_mode=None, seed=None, width=84, height=84, n_rows=10, n_cols=20):
-        super().__init__(render_mode, seed, width, height, n_rows, n_cols)
+    def __init__(self, render_mode=None, seed=None):
+        super().__init__(render_mode, seed, 84, 84, 10, 20)

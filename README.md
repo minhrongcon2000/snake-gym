@@ -37,3 +37,15 @@ env.close()
 - done: whether the snake dies
 - truncate: whether the game is running for more than 100000 time steps
 - info: an empty dictionary for now
+
+## Customize environment
+
+Instead of using registered environment, one can utilize the built-in `SnakeGymGrid` class.
+
+```python
+# this import is kinda ugly but I have no choice but to follow the gym standard
+from snake_gym_grid.snake_gym_grid.envs.snake_gym_grid import SnakeGymGrid
+
+env = SnakeGymGrid(width=..., height=..., n_rows=..., n_cols=...)
+...
+```
