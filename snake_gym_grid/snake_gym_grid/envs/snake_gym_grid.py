@@ -1,6 +1,5 @@
 import gym
 from gym import spaces
-from gym.utils.renderer import Renderer
 from gym.error import DependencyNotInstalled
 import numpy as np
 from .controller import SnakeMove, SnakeController
@@ -16,19 +15,20 @@ class SnakeWindowColor:
     CELL_BORDER_COLOR = (0, 0, 0)
 
 
-class SnakeGym(gym.Env):
+class SnakeGymGrid(gym.Env):
     metadata = {"render_modes": ["human", "rgb_array", "single_rgb_array"], "render_fps": 60}
-    def __init__(self, render_mode=None):
+    def __init__(self, render_mode=None, seed=None, width=900, height=500, n_rows=10, n_cols=20):
         super().__init__()
+        self.seed = seed
         
         self.render_mode = render_mode
-        self.width = 900
-        self.height = 500
+        self.width = width
+        self.height = height
         
-        self.n_rows = 10
-        self.n_cols = 20
+        self.n_rows = n_rows
+        self.n_cols = n_cols
         controller = SnakeController(self.n_rows, self.n_cols)
-        self.view = SnakeView(900, 500, controller)
+        self.view = SnakeView(self.width, self.height, controller)
         
         self.action_space = spaces.Discrete(4)
         self.observation_space = spaces.Box(low=0, high=255, shape=(self.height, self.width, 3), dtype=np.uint8)
@@ -37,15 +37,9 @@ class SnakeGym(gym.Env):
         self.render_rect_colors = [SnakeWindowColor.CELL_BORDER_COLOR, SnakeWindowColor.SNAKE_COLOR, SnakeWindowColor.FOOD_COLOR]
         self.widths = [-1, 0, 0]
         self.window = None
-        self.num_steps = 0
-        self.renderer = Renderer(self.render_mode, self._render_frame)
         
-    def reset(self, seed=None, return_info = False, options=None):
-        super().reset(seed=seed)
-        self.num_steps = 0
-        self.view.controller = SnakeController(self.n_rows, self.n_cols, random_state=seed)
-        self.view.draw_game_view()
-        observations = self.view.game_view
+    def reset(self):
+        observations = self.view.reset()
         observations = cv2.cvtColor(observations, cv2.COLOR_BGR2RGB)
         return observations
     
@@ -53,12 +47,9 @@ class SnakeGym(gym.Env):
         hasEatenFood, isAlive = self.view.move(self.possible_actions[action])
         observations = self.view.game_view
         observations = cv2.cvtColor(observations, cv2.COLOR_BGR2RGB)
-        self.num_steps += 1
         return observations, float(hasEatenFood), not isAlive, {}
     
     def render(self, mode="human"):
-        if mode is None:
-            return self.renderer.get_renders()
         return self._render_frame(mode)
     
     def _render_frame(self, mode="human"):
@@ -88,3 +79,7 @@ class SnakeGym(gym.Env):
             import pygame
             pygame.display.quit()
             pygame.quit()
+            
+class SnakeGymGrid10x20(SnakeGymGrid):
+    def __init__(self, render_mode=None, seed=None, width=84, height=84, n_rows=10, n_cols=20):
+        super().__init__(render_mode, seed, width, height, n_rows, n_cols)

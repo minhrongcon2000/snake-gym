@@ -20,10 +20,18 @@ class SnakeController:
         np.random.seed(random_state)
         self.board_state = np.zeros((n_rows, n_cols), dtype=int)
         
+        self.n_rows = n_rows
+        self.n_cols = n_cols
+        
+        self.reset()
+        
+    def reset(self):
+        self.board_state = np.zeros((self.n_rows, self.n_cols), dtype=int)
+        
         # snake logic
-        self.board_state[n_rows // 2 - 1, n_cols // 2 - 1] = 1
-        self.board_state[n_rows // 2 - 1, n_cols // 2 - 2] = SnakeComponent.SNAKE
-        self.snake = np.array([(n_rows // 2 - 1, n_cols // 2 - 1), (n_rows // 2 - 1, n_cols // 2 - 2)])
+        self.board_state[self.n_rows // 2 - 1, self.n_cols // 2 - 1] = 1
+        self.board_state[self.n_rows // 2 - 1, self.n_cols // 2 - 2] = SnakeComponent.SNAKE
+        self.snake = np.array([(self.n_rows // 2 - 1, self.n_cols // 2 - 1), (self.n_rows // 2 - 1, self.n_cols // 2 - 2)])
         self.snake_dynamic = np.repeat(SnakeMove.RIGHT, len(self.snake), axis=0)
         self.event_queue = deque()
 

@@ -11,8 +11,11 @@ class SnakeView:
         self.image_height = image_height
         self.controller = controller
         self.n_rows, self.n_cols = self.controller.board_state.shape
-        self.create_game_materials()
-        self.draw_game_view()
+        self.normal_ceil = None
+        self.food_ceil = None
+        self.snake_ceil = None
+        self.game_view = None
+        self.reset()
         
     def create_game_materials(self):
         self.grid_height = self.image_height // self.n_rows
@@ -41,3 +44,10 @@ class SnakeView:
         hasEatenFood, hasDied = self.controller.move(direction)
         self.draw_game_view()
         return hasEatenFood, hasDied
+    
+    def reset(self):
+        self.controller.reset()
+        if self.normal_ceil is None or self.snake_ceil is None or self.food_ceil is None:
+            self.create_game_materials()
+        self.draw_game_view()
+        return self.game_view
