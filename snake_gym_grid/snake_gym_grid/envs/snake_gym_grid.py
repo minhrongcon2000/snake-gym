@@ -82,4 +82,4 @@ class SnakeGymGrid(gym.Env):
             
 class SnakeGymGrid10x20(SnakeGymGrid):
     def __init__(self, render_mode=None, seed=None):
-        super().__init__(render_mode, seed, 84, 84, 10, 20)
+        super().__init__(render_mode, seed, 80, 80, 10, 20)
