@@ -25,8 +25,8 @@ class SnakeView:
         self.snake_ceil = np.zeros((self.grid_height, self.grid_width, 3), dtype=np.uint8)
         self.food_ceil = np.zeros((self.grid_height, self.grid_width, 3), dtype=np.uint8)
         
-        # normal ceil is a white square covered by black border
-        self.normal_ceil[1:-1, 1:-1, :] = 255
+        # normal ceil is a white square
+        self.normal_ceil[:] = 255
         
         # snake ceil is a blue square covered by black border
         self.snake_ceil[1:-1, 1:-1, 2] = 255
