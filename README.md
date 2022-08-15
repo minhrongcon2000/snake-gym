@@ -33,7 +33,7 @@ env.close()
 ## Output at each time step
 
 - observation: Pixel image of the game
-- reward: 1.0 when a food is eaten 0.0 otherwise
+- reward: 1.0 when a food is eaten, -1.0 if snake dies, 0.0 otherwise
 - done: whether the snake dies
 - truncate: whether the game is running for more than 100000 time steps
 - info: an empty dictionary for now
