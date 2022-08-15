@@ -47,7 +47,7 @@ class SnakeGymGrid(gym.Env):
         hasEatenFood, isAlive = self.view.move(self.possible_actions[action])
         observations = self.view.game_view
         observations = cv2.cvtColor(observations, cv2.COLOR_BGR2RGB)
-        if not isAlive:
+        if isAlive:
             return observations, float(hasEatenFood), not isAlive, {}
         return observations, -1, not isAlive, {}
     
