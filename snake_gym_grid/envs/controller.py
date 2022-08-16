@@ -16,8 +16,9 @@ class SnakeComponent:
 
 
 class SnakeController:
-    def __init__(self, n_rows, n_cols, random_state=None):
+    def __init__(self, n_rows, n_cols, random_state=None, debug=False):
         np.random.seed(random_state)
+        self.debug = debug
         self.board_state = np.zeros((n_rows, n_cols), dtype=int)
         
         self.n_rows = n_rows
@@ -29,7 +30,7 @@ class SnakeController:
         self.board_state = np.zeros((self.n_rows, self.n_cols), dtype=int)
         
         # snake logic
-        self.board_state[self.n_rows // 2 - 1, self.n_cols // 2 - 1] = 1
+        self.board_state[self.n_rows // 2 - 1, self.n_cols // 2 - 1] = SnakeComponent.SNAKE
         self.board_state[self.n_rows // 2 - 1, self.n_cols // 2 - 2] = SnakeComponent.SNAKE
         self.snake = np.array([(self.n_rows // 2 - 1, self.n_cols // 2 - 1), (self.n_rows // 2 - 1, self.n_cols // 2 - 2)])
         self.snake_dynamic = np.repeat(SnakeMove.RIGHT, len(self.snake), axis=0)
@@ -42,7 +43,10 @@ class SnakeController:
         self.event_queue.append((movement, 0))
         
     def spawn_food(self):
-        self.food_x, self.food_y = random.choice(np.argwhere(self.board_state == 0))
+        if not self.debug:
+            self.food_x, self.food_y = random.choice(np.argwhere(self.board_state == 0))
+        else:
+            self.food_x, self.food_y = self.n_rows // 2 - 1, self.n_cols // 2
         self.board_state[self.food_x, self.food_y] = SnakeComponent.FOOD
         
     def propagate_event(self):
@@ -79,3 +83,12 @@ class SnakeController:
                 
             return eat_food, not np.any((self.snake[0, 0] == self.snake[1:, 0]) & (self.snake[0, 1] == self.snake[1:, 1]))
         return eat_food, False
+    
+    def get_food_location(self):
+        return self.food_x, self.food_y
+    
+    def get_snake_head(self):
+        return self.snake[0, 0], self.snake[0, 1]
+    
+    def get_board_state(self):
+        return self.board_state

@@ -17,7 +17,7 @@ class SnakeWindowColor:
 
 class SnakeGymGrid(gym.Env):
     metadata = {"render_modes": ["human", "rgb_array", "single_rgb_array"], "render_fps": 60}
-    def __init__(self, render_mode=None, seed=None, width=900, height=500, n_rows=10, n_cols=20):
+    def __init__(self, render_mode=None, seed=None, width=900, height=500, n_rows=10, n_cols=20, debug=False):
         super().__init__()
         self.seed = seed
         
@@ -27,7 +27,7 @@ class SnakeGymGrid(gym.Env):
         
         self.n_rows = n_rows
         self.n_cols = n_cols
-        controller = SnakeController(self.n_rows, self.n_cols)
+        controller = SnakeController(self.n_rows, self.n_cols, debug=debug)
         self.view = SnakeView(self.width, self.height, controller)
         
         self.action_space = spaces.Discrete(4)
@@ -82,10 +82,21 @@ class SnakeGymGrid(gym.Env):
             pygame.display.quit()
             pygame.quit()
             
+    def get_food_location(self):
+        return self.view.get_food_location()
+    
+    def get_snake_head(self):
+        return self.view.get_snake_head()
+    
+    def get_board_state(self):
+        return self.view.get_board_state()
+
+            
 class SnakeGymGrid10x20Tiny(SnakeGymGrid):
-    def __init__(self, render_mode=None, seed=None):
-        super().__init__(render_mode, seed, 80, 80, 10, 20)
+    def __init__(self, render_mode=None, seed=None, debug=False):
+        super().__init__(render_mode, seed, 80, 80, 10, 20, debug=debug)
         
+
 class SnakeGymGrid10x20Normal(SnakeGymGrid):
-    def __init__(self, render_mode=None, seed=None):
-        super().__init__(render_mode, seed)
+    def __init__(self, render_mode=None, seed=None, debug=False):
+        super().__init__(render_mode, seed, debug=debug)

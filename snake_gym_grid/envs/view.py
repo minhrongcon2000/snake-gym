@@ -51,3 +51,12 @@ class SnakeView:
             self.create_game_materials()
         self.draw_game_view()
         return self.game_view
+    
+    def get_food_location(self):
+        return self.controller.get_food_location()
+    
+    def get_snake_head(self):
+        return self.controller.get_snake_head()
+    
+    def get_board_state(self):
+        return self.controller.get_board_state()
