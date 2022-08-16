@@ -60,3 +60,6 @@ class SnakeView:
     
     def get_board_state(self):
         return self.controller.get_board_state()
+    
+    def get_summary_state(self):
+        return self.controller.get_summary_state()

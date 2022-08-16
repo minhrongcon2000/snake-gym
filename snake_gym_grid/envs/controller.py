@@ -20,7 +20,7 @@ class SnakeController:
         np.random.seed(random_state)
         self.debug = debug
         self.board_state = np.zeros((n_rows, n_cols), dtype=int)
-        
+        self.directions = np.array([SnakeMove.LEFT, SnakeMove.RIGHT, SnakeMove.UP, SnakeMove.DOWN])
         self.n_rows = n_rows
         self.n_cols = n_cols
         
@@ -92,3 +92,17 @@ class SnakeController:
     
     def get_board_state(self):
         return self.board_state
+    
+    def get_summary_state(self):
+        h, w = self.board_state.shape
+        state = np.array([
+            self.snake[0, 1] + 1 >= w or self.board_state[self.snake[0, 0], self.snake[0, 1] + 1] == 1,
+            self.snake[0, 1] - 1 < 0 or self.board_state[self.snake[0, 0], self.snake[0, 1] - 1] == 1,
+            self.snake[0, 0] + 1 >= h or self.board_state[self.snake[0, 0] + 1, self.snake[0, 1]] == 1,
+            self.snake[0, 0] - 1 < 0 or self.board_state[self.snake[0, 0] - 1, self.snake[0, 1]] == 1,
+            self.food_x > self.snake[0, 0],
+            self.food_x < self.snake[0, 0],
+            self.food_y > self.snake[0, 1],
+            self.food_y < self.snake[0, 1]
+        ], dtype=np.float32)
+        return state

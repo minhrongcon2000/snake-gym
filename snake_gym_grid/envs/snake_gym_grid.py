@@ -90,6 +90,19 @@ class SnakeGymGrid(gym.Env):
     
     def get_board_state(self):
         return self.view.get_board_state()
+    
+class SnakeGymGrid1D(SnakeGymGrid):
+    def __init__(self, render_mode=None, seed=None, width=900, height=500, n_rows=10, n_cols=20, debug=False):
+        super().__init__(render_mode, seed, width, height, n_rows, n_cols, debug)
+        self.observation_space = spaces.Box(low=1, high=1, shape=(8,), dtype=np.float32)
+    
+    def reset(self):
+        super().reset()
+        return self.view.get_summary_state()
+    
+    def step(self, action):
+        _, reward, done, info = super().step(action)
+        return self.view.get_summary_state(), reward, done, info
 
             
 class SnakeGymGrid10x20Tiny(SnakeGymGrid):
