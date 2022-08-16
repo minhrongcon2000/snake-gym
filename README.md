@@ -6,7 +6,7 @@ This package is my own implementation on Snake game with Gym integration.
 
 ```python
 import gym
-import snake_gym_grid.snake_gym_grid
+import snake_gym_grid
 
 env = gym.make("snake-gym-10x20-v0")
 env.reset()
@@ -44,7 +44,7 @@ Instead of using registered environment, one can utilize the built-in `SnakeGymG
 
 ```python
 # this import is kinda ugly but I have no choice but to follow the gym standard
-from snake_gym_grid.snake_gym_grid.envs.snake_gym_grid import SnakeGymGrid
+from snake_gym_grid.envs.snake_gym_grid import SnakeGymGrid
 
 env = SnakeGymGrid(width=..., height=..., n_rows=..., n_cols=...)
 ...
