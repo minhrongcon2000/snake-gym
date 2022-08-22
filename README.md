@@ -8,7 +8,7 @@ This package is my own implementation on Snake game with Gym integration.
 import gym
 import snake_gym_grid
 
-env = gym.make("snake-gym-10x20-v0")
+env = gym.make("snake-gym-10x20-normal-v0")
 env.reset()
 
 done = False # whether the snake dies
@@ -37,6 +37,20 @@ env.close()
 - done: whether the snake dies
 - truncate: whether the game is running for more than 100000 time steps
 - info: an empty dictionary for now
+
+## Env registration
+
+- `snake-gym-grid-10x20-normal-v0`: Snake game with 10 x 20 board and 500 x 900 observation
+- `snake-gym-grid-10x20-tiny-v0`: Snake game with 10 x 20 board and 80 x 80 observation
+- `snake-gym-grid-10x20-1d-v0`: Snake game with 10 x 20 board and summarized observation. Observation in this case is vector `[dangerRight, dangerLeft, dangerBelow, dangerAbove, foodBelow, foodAbove, foodRight, foodLeft]`.
+
+_Note_:
+
+- `danger<Direction>` = neighbor block of snake head in the `<Direction>` is occupied by a snake body or is out of game board.
+
+- `food<Direction>` = is the food in the `<Direction>` of the snake head?
+
+- For any other environment, observation is the raw image from the game view. For tiny, the size is 80 x 80 and for normal, it's 500 x 900.
 
 ## Customize environment
 

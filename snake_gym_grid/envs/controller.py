@@ -96,13 +96,13 @@ class SnakeController:
     def get_summary_state(self):
         h, w = self.board_state.shape
         state = np.array([
-            self.snake[0, 1] + 1 >= w or self.board_state[self.snake[0, 0], self.snake[0, 1] + 1] == 1,
-            self.snake[0, 1] - 1 < 0 or self.board_state[self.snake[0, 0], self.snake[0, 1] - 1] == 1,
-            self.snake[0, 0] + 1 >= h or self.board_state[self.snake[0, 0] + 1, self.snake[0, 1]] == 1,
-            self.snake[0, 0] - 1 < 0 or self.board_state[self.snake[0, 0] - 1, self.snake[0, 1]] == 1,
-            self.food_x > self.snake[0, 0],
-            self.food_x < self.snake[0, 0],
-            self.food_y > self.snake[0, 1],
-            self.food_y < self.snake[0, 1]
+            self.snake[0, 1] + 1 >= w or self.board_state[self.snake[0, 0], self.snake[0, 1] + 1] == 1, # danger to the right
+            self.snake[0, 1] - 1 < 0 or self.board_state[self.snake[0, 0], self.snake[0, 1] - 1] == 1, # danger to the left
+            self.snake[0, 0] + 1 >= h or self.board_state[self.snake[0, 0] + 1, self.snake[0, 1]] == 1, # danger below
+            self.snake[0, 0] - 1 < 0 or self.board_state[self.snake[0, 0] - 1, self.snake[0, 1]] == 1, # danger above
+            self.food_x > self.snake[0, 0], # is food below?
+            self.food_x < self.snake[0, 0], # is food above?
+            self.food_y > self.snake[0, 1], # is food right?
+            self.food_y < self.snake[0, 1] # is food left?
         ], dtype=np.float32)
         return state
