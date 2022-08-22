@@ -1,5 +1,11 @@
 import gym
 
+"""
+Wrapper for limiting redundant actions.
+If snakes does not eat food for more than max_no_eat_times step,
+then kill the snake. 
+This does not change the reward at the moment of writing this.
+"""
 class NoImprovementWrapper(gym.Wrapper):
     def __init__(self, env: gym.Env, max_no_eat_times=200):
         gym.Wrapper.__init__(self, env)
